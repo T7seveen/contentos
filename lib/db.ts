@@ -2,7 +2,10 @@ import fs from "fs";
 import path from "path";
 import { DB, Idea, Note, CalendarEvent, Notification, TrendItem } from "./types";
 
-const DB_FILE = path.join(process.cwd(), "data", "db.json");
+// On Vercel, process.cwd() is read-only — use /tmp for ephemeral writable storage
+const DB_FILE = process.env.VERCEL
+  ? "/tmp/db.json"
+  : path.join(process.cwd(), "data", "db.json");
 
 function ensureDir() {
   const dir = path.dirname(DB_FILE);

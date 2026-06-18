@@ -11,6 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ContentOS — AI Social Media Platform",
   description: "AI-powered social media analytics and content management platform",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

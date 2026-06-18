@@ -301,3 +301,125 @@ body {
 
 .recharts-tooltip-wrapper { z-index: 100 !important; }
 
+/* ── Mobile / Responsive ── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 49;
+  backdrop-filter: blur(2px);
+}
+
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+  .sidebar-overlay.open { display: block; }
+
+  /* Sidebar becomes a fixed drawer on mobile */
+  aside.app-sidebar {
+    position: fixed !important;
+    left: -240px;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    transition: left 0.3s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+  aside.app-sidebar.open {
+    left: 0;
+  }
+
+  /* Main content takes full width */
+  main.app-main {
+    padding-top: 60px !important;
+  }
+
+  /* Responsive page padding */
+  .page-content {
+    padding: 16px !important;
+  }
+
+  /* Responsive grids */
+  .grid-4 { grid-template-columns: 1fr 1fr !important; }
+  .grid-3 { grid-template-columns: 1fr !important; }
+  .grid-2 { grid-template-columns: 1fr !important; }
+
+  /* Analytics / dashboard two-col → one col */
+  [style*="grid-template-columns: 1fr 280px"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="gridTemplateColumns: '1fr 280px'"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Card padding reduction */
+  .card { border-radius: 12px; }
+
+  /* Chat bubbles */
+  .chat-bubble-user, .chat-bubble-ai { max-width: 95%; }
+
+  /* Hide right panels on small screens that are optional */
+  .hide-mobile { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: 1fr !important; }
+  body { font-size: 13px; }
+}
+
+/* Force responsive grids on all pages for mobile */
+@media (max-width: 768px) {
+  /* Stat cards row — 4 → 2 */
+  div[style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* 3-col → 1 */
+  div[style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Two-col layouts with sidebar panel → stack */
+  div[style*="1fr 280px"],
+  div[style*="1fr 300px"],
+  div[style*="1fr 320px"],
+  div[style*="1fr 240px"],
+  div[style*="2fr 1fr"],
+  div[style*="3fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Dashboard / analytics page padding */
+  div[style*="padding: \"28px 32px\""],
+  div[style*='padding: "28px 32px"'] {
+    padding: 16px !important;
+  }
+  /* Hide wide right panels */
+  .right-panel-hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  div[style*="grid-template-columns: repeat(2"] {
+    grid-template-columns: 1fr !important;
+  }
+  div[style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+

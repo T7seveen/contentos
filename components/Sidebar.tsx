@@ -10,6 +10,7 @@ import {
 import { useTheme } from "./ThemeProvider";
 import NotificationsPanel from "./NotificationsPanel";
 import { useI18n } from "@/lib/i18n";
+import { X } from "lucide-react";
 
 const nav = [
   { href: "/dashboard", label: "Дашборд", icon: LayoutDashboard },
@@ -21,13 +22,16 @@ const nav = [
   { href: "/assistant", label: "AI Ассистент", icon: MessageSquare, dot: true },
 ];
 
-export default function Sidebar() {
+interface SidebarProps { open?: boolean; onClose?: () => void; }
+
+export default function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
   const { lang, setLang } = useI18n();
 
   return (
     <aside
+      className={`app-sidebar${open ? " open" : ""}`}
       style={{
         width: 224,
         minWidth: 224,
@@ -45,6 +49,7 @@ export default function Sidebar() {
     >
       {/* Logo */}
       <div style={{ padding: "6px 6px 16px", borderBottom: "1px solid var(--border-subtle)", marginBottom: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 9, justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
           <div
             style={{
@@ -68,6 +73,13 @@ export default function Sidebar() {
             <div style={{ fontSize: 10, color: "var(--text-tertiary)", fontWeight: 500, letterSpacing: "0.02em" }}>AI Platform v2.0</div>
           </div>
         </div>
+        {/* Close button — mobile only */}
+        {onClose && (
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-tertiary)", padding: 4, display: "flex", alignItems: "center" }}>
+            <X size={18} />
+          </button>
+        )}
+        </div>
       </div>
 
       {/* Nav */}
@@ -78,7 +90,7 @@ export default function Sidebar() {
         {nav.map(({ href, label, icon: Icon, badge, dot }) => {
           const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
-            <Link key={href} href={href} className={`sidebar-link${active ? " active" : ""}`}>
+            <Link key={href} href={href} className={`sidebar-link${active ? " active" : ""}`} onClick={onClose}>
               <Icon size={15} strokeWidth={active ? 2.5 : 2} />
               <span style={{ flex: 1 }}>{label}</span>
               {badge && (
